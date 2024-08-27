@@ -7,6 +7,7 @@ import com.mani.example.productservices.Exception.InvalidProductIDException;
 import com.mani.example.productservices.Exception.ProductNotFoundException;
 import com.mani.example.productservices.Model.Product;
 import com.mani.example.productservices.Service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class ProductController {
     private ProductMapper mapper;
 
     //Injecting product service in controller
-    public ProductController(ProductService svc, ProductMapper mapper) {
+    public ProductController(@Qualifier("SelfProductService") ProductService svc, ProductMapper mapper) {
         this.productService = svc;
         this.mapper = mapper;
     }
@@ -61,8 +62,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ProductResponseDTO getProductById(@PathVariable("id") Long id) throws InvalidProductIDException, ProductNotFoundException {
-        validateRequestParams(id);
+    public ProductResponseDTO getProductById(@PathVariable("id") Integer id) throws InvalidProductIDException, ProductNotFoundException {
+//        validateRequestParams(id);
         if(id==null)
         {
             //throw an exception

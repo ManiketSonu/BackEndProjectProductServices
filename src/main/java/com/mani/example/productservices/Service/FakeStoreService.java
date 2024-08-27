@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("FakeStoreService")
 public class FakeStoreService implements ProductService{
 
     private RestTemplate restTemplate;
@@ -23,7 +23,7 @@ public class FakeStoreService implements ProductService{
     }
 
     @Override
-    public Product getProductById(Long id)
+    public Product getProductById(Integer id)
     {
 //        System.out.print("I am Inside Service and bhai calling fakestore service");
         /*
