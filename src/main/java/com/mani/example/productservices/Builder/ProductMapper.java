@@ -18,6 +18,7 @@ public class ProductMapper {
 
         if(product.getId()!=null)
         {
+            System.out.println("Inside product mapper");
             dto.setId(product.getId());
         }
         return dto;

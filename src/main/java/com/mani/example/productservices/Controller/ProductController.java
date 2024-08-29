@@ -62,10 +62,12 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ProductResponseDTO getProductById(@PathVariable("id") Integer id) throws InvalidProductIDException, ProductNotFoundException {
+    public ProductResponseDTO getProductById(@PathVariable("id") Integer id)
+            throws InvalidProductIDException, ProductNotFoundException {
 //        validateRequestParams(id);
         if(id==null)
         {
+            System.out.println("Inside controller");
             //throw an exception
 //            System.out.println("id is null");
             throw  new InvalidProductIDException("some message");
@@ -75,6 +77,7 @@ public class ProductController {
         Product product = productService.getProductById(id);
         if(product==null)
         {
+            System.out.println("Inside controller2");
             throw new ProductNotFoundException();
         }
         //s2. map to response DTO
@@ -92,20 +95,20 @@ public class ProductController {
     }
 
 
-    private ProductResponseDTO converToProductResponseDTO(Product product) {
-        ProductResponseDTO dto = new ProductResponseDTO();
-        dto.setCategory(product.getCategory());
-        dto.setDescription(product.getDescription());
-        dto.setId(product.getId());
-        dto.setPrice(product.getPrice());
-        dto.setTitle(product.getTitle());
-
-        if(product.getId()!=null)
-        {
-            dto.setId(product.getId());
-        }
-        return dto;
-    }
+//    private ProductResponseDTO converToProductResponseDTO(Product product) {
+//        ProductResponseDTO dto = new ProductResponseDTO();
+//        dto.setCategory(product.getCategory());
+//        dto.setDescription(product.getDescription());
+//        dto.setId(product.getId());
+//        dto.setPrice(product.getPrice());
+//        dto.setTitle(product.getTitle());
+//
+//        if(product.getId()!=null)
+//        {
+//            dto.setId(product.getId());
+//        }
+//        return dto;
+//    }
 
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable("id") Long id)
