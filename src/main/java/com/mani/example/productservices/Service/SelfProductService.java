@@ -4,6 +4,7 @@ import com.mani.example.productservices.Model.Category;
 import com.mani.example.productservices.Model.Product;
 import com.mani.example.productservices.Repository.CategoryRepo;
 import com.mani.example.productservices.Repository.ProductRepo;
+import com.mani.example.productservices.Repository.Projection.ProductProjection;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -71,4 +72,13 @@ public class SelfProductService implements ProductService{
     public List<Product> getAllProducts() {
         return null;
     }
+
+    public Product getProductFromIdAndTitle(Integer id, String title) {
+        Product product  = productRepo.getProductFromIdAndTitle(id, title);
+        ProductProjection productProjection = productRepo.getTitleAndPriceProductFromId(id);
+        productProjection.getPrice();
+
+        return product;
+    }
+
 }
