@@ -87,28 +87,25 @@ public class ProductController {
         return response;
     }
 
+//    @GetMapping("/product/{id}/{title}")
+//    public ProductResponseDTO getProductusingIdAndTitle(@PathVariable("id") Integer id,
+//                                                        @PathVariable("title") String title)
+//            throws ProductNotFoundException {
+//
+//        if (id == null) {
+//            throw new ProductNotFoundException("Give the ID");
+//        }
+//        Product product = productService.getProductByIdAndTitle(id, title);
+//
+//        return mapper.converToProductResponseDTO(product);
+//    }
+
     private void validateRequestParams(Long id) {
         if(id==null)
         {
             //trow an exception
         }
     }
-
-
-//    private ProductResponseDTO converToProductResponseDTO(Product product) {
-//        ProductResponseDTO dto = new ProductResponseDTO();
-//        dto.setCategory(product.getCategory());
-//        dto.setDescription(product.getDescription());
-//        dto.setId(product.getId());
-//        dto.setPrice(product.getPrice());
-//        dto.setTitle(product.getTitle());
-//
-//        if(product.getId()!=null)
-//        {
-//            dto.setId(product.getId());
-//        }
-//        return dto;
-//    }
 
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable("id") Long id)
