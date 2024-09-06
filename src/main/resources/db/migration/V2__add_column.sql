@@ -1,0 +1,1 @@
+alter table product add column productAddress varchar(255);

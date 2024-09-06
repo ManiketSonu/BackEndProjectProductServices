@@ -1,5 +1,7 @@
 package com.mani.example.productservices;
 //import com.mani.example.productservices.Repository.Projection.ProductProjection;
+import com.mani.example.productservices.Model.Category;
+import com.mani.example.productservices.Repository.CategoryRepo;
 import com.mani.example.productservices.Repository.ProductRepo;
 import com.mani.example.productservices.Repository.Projection.ProductProjection;
 import jakarta.transaction.Transactional;
@@ -15,8 +17,8 @@ class ProductServicesApplicationTests {
 	@Autowired
 	private ProductRepo productRepository;
 
-//	@Autowired
-//	private CategoryRepo categoryRepository;
+	@Autowired
+	private CategoryRepo categoryRepository;
 
 //	@Test
 //	@Transactional
@@ -25,6 +27,7 @@ class ProductServicesApplicationTests {
 	}
 
     @Test
+    @Transactional
     void testingQueries()
     {
 		List<ProductProjection> list = productRepository.
@@ -37,5 +40,11 @@ class ProductServicesApplicationTests {
         System.out.println(list1.get(0).getId());
         System.out.println(list1.get(0).getPrice());
         System.out.println(list1.get(0).getDescription());
+
+        Category cat = categoryRepository.findByTitle("Mobile");
+        System.out.println(cat);
+        System.out.println(cat.getProducts());
+        System.out.println(cat);
+
     }
 }

@@ -4,6 +4,7 @@ package com.mani.example.productservices.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,6 @@ public class Category extends BaseModel implements Serializable {
     private String title;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     List<Product> products;
 }
