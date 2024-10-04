@@ -5,6 +5,10 @@ import com.mani.example.productservices.Model.Product;
 import com.mani.example.productservices.Repository.CategoryRepo;
 import com.mani.example.productservices.Repository.ProductRepo;
 import com.mani.example.productservices.Repository.Projection.ProductProjection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -60,6 +64,19 @@ public class SelfProductService implements ProductService{
     @Override
     public List<Product> getAllProducts() {
         return null;
+    }
+
+    @Override
+    public Page<Product> getPaginatedProduct(int page, int size) {
+        //findAll(Pageable pageable);
+        String sortBy = "name";
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, sortBy);
+        Page<Product> productPage = productRepo.findAll(pageable);
+//        productPage.getTotalElements();
+//        productPage.get();
+//        productPage.getTotalPages();
+//        List<Product> products = productPage.getContent();
+        return productPage;
     }
 
     public Product getProductByIdAndTitle(Integer id, String title) {

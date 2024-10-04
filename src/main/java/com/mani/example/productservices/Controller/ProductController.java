@@ -8,6 +8,8 @@ import com.mani.example.productservices.Exception.ProductNotFoundException;
 import com.mani.example.productservices.Model.Product;
 import com.mani.example.productservices.Service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,9 +27,9 @@ public class ProductController {
         this.productService = svc;
         this.mapper = mapper;
     }
+
     @PostMapping("/product")
-    public ProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO dto)
-    {
+    public ProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO dto) {
         //s1. Validate the request
 
         //s2. call the service layer
@@ -44,18 +46,15 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<ProductResponseDTO> getAllProducts()
-    {
+    public List<ProductResponseDTO> getAllProducts() {
         List<Product> productList = productService.getAllProducts();
-        if(productList==null || productList.size()==0)
-        {
+        if (productList == null || productList.size() == 0) {
             return null;
         }
         List<ProductResponseDTO> response = new ArrayList<>();
 
         //converting model to dtosList..
-        for(Product p:productList)
-        {
+        for (Product p : productList) {
             response.add(mapper.converToProductResponseDTO(p));
         }
         return response;
@@ -65,18 +64,16 @@ public class ProductController {
     public ProductResponseDTO getProductById(@PathVariable("id") Integer id)
             throws InvalidProductIDException, ProductNotFoundException {
 //        validateRequestParams(id);
-        if(id==null)
-        {
+        if (id == null) {
             System.out.println("Inside controller");
             //throw an exception
 //            System.out.println("id is null");
-            throw  new InvalidProductIDException("some message");
+            throw new InvalidProductIDException("some message");
         }
 
         //s1. call to service layer
         Product product = productService.getProductById(id);
-        if(product==null)
-        {
+        if (product == null) {
             System.out.println("Inside controller2");
             throw new ProductNotFoundException();
         }
@@ -101,15 +98,21 @@ public class ProductController {
 //    }
 
     private void validateRequestParams(Long id) {
-        if(id==null)
-        {
+        if (id == null) {
             //trow an exception
         }
     }
 
     @DeleteMapping("/products/{id}")
-    public void deleteProduct(@PathVariable("id") Long id)
-    {
+    public void deleteProduct(@PathVariable("id") Long id) {
 
+    }
+
+    @GetMapping("/products/{page}/{size}")
+    public ResponseEntity<List<Product>> getPaginatedProduct(@PathVariable("page") Integer page
+                                            , @PathVariable("size") Integer size){
+        Page<Product> products = productService.getPaginatedProduct(page, size);
+        System.out.println("Received product: "+products);
+        return ResponseEntity.ok(products.getContent());
     }
 }

@@ -5,6 +5,7 @@ package com.mani.example.productservices.Service;
  */
 
 import com.mani.example.productservices.Model.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ProductService {
                               String Category);
 
     public List<Product> getAllProducts();
+
+    public Page<Product> getPaginatedProduct(int page, int size);
 }

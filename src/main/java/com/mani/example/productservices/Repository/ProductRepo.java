@@ -33,4 +33,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     @Query("select p.id as id,  p.price as price from Product p where p.title = :title")
     List<ProductProjection> getTitleAndPriceProductFromTitle(@Param("title") String title);
+
+
 }
