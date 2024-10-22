@@ -8,6 +8,9 @@ import com.mani.example.productservices.Exception.ProductNotFoundException;
 import com.mani.example.productservices.Model.Product;
 import com.mani.example.productservices.Service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,7 @@ public class ProductController {
     }
 
     @PostMapping("/product")
+    @CachePut(value = "product", condition = "#result.id !=null", key = "#result.id")
     public ProductResponseDTO createProduct(@RequestBody CreateProductRequestDTO dto) {
         //s1. Validate the request
 
@@ -42,7 +46,8 @@ public class ProductController {
         //s3. convert this to DTO
 //        ProductResponseDTO productresponsedto = mapper.converToProductResponseDTO(product);
 //        return productresponsedto;
-        return mapper.converToProductResponseDTO(product);
+        ProductResponseDTO responseDTO = mapper.converToProductResponseDTO(product);
+        return responseDTO;
     }
 
     @GetMapping("/products")
@@ -61,6 +66,7 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
+    @Cacheable(value = "product", key = "#id")
     public ProductResponseDTO getProductById(@PathVariable("id") Integer id)
             throws InvalidProductIDException, ProductNotFoundException {
 //        validateRequestParams(id);
@@ -104,6 +110,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
+    @CacheEvict(value = "product", key = "#id")
     public void deleteProduct(@PathVariable("id") Long id) {
 
     }

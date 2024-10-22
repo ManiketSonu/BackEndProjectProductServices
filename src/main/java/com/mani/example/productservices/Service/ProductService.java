@@ -14,9 +14,10 @@ public interface ProductService {
 
     public Product createProduct(String title,
                               String description,
+                                 String Category,
                               String price,
-                              String Image,
-                              String Category);
+                              String Image
+                              );
 
     public List<Product> getAllProducts();
 

@@ -32,7 +32,7 @@ public class SelfProductService implements ProductService{
     }
 
     @Override
-    public Product createProduct(String title, String price, String category, String description,
+    public Product createProduct(String title, String description, String category, String price,
                                   String image) {
         Category existingCategory = categoryRepo.findByTitle(category);
 
